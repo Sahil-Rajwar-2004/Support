@@ -1,3 +1,5 @@
+version = "0.0.1"
+
 def AND(X,Y):
     if X in [0,1,True,False] and Y in [0,1,True,False]:
         return X and Y

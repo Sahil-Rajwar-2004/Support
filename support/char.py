@@ -1,3 +1,5 @@
+version = "0.0.1"
+
 class char:
     def __init__(self,char):
         if not len(list(char)) == 1:

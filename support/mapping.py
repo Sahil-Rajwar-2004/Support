@@ -1,3 +1,5 @@
+version = "0.0.1"
+
 class Mapping:
     def __init__(self,key_type,value_type):
         self.__key_type = key_type

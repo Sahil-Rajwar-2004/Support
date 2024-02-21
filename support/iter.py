@@ -1,5 +1,7 @@
 import random
 
+version = "0.0.1"
+
 class RandomNumberGenerator:
     def __init__(self,start,end,count):
         self.start = start

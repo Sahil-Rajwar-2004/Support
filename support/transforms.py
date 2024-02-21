@@ -1,3 +1,5 @@
+version = "0.0.1"
+
 class DFT: # Discrete Fourier Transform
     def __init__(self,function,k,n_samples):
         self.function = function

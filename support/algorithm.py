@@ -1,3 +1,5 @@
+version = "0.0.1"
+
 def linear_search(array,target):
     for x in range(len(array)):
         if target == array[x]:

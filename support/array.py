@@ -1,5 +1,7 @@
 from .matrix import matrix
 
+version = "0.0.1"
+
 def array(array):
     return Array(array)
 

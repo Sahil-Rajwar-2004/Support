@@ -1,5 +1,7 @@
 import os
 
+version = "0.0.1"
+
 class SearchFile:
     def __init__(self,filename,directory = os.getcwd()):
         self.filename = filename

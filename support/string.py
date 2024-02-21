@@ -1,3 +1,5 @@
+version = "0.0.1"
+
 class string:
     def __init__(self,text):
         self.__text = text

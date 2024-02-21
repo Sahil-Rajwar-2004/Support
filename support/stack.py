@@ -1,3 +1,5 @@
+version = "0.0.1"
+
 class Node:
     def __init__(self,data):
         self.data = data

@@ -10,6 +10,8 @@ keep in mind that this whole module is written for cartesian plane only
 from .mathx import sqrt,find_min
 import numpy as np
 
+version = "0.0.1"
+
 def vector(array):
     if len(array) == 3:
         return Vector(float(array[0]),float(array[1]),float(array[2]))

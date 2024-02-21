@@ -25,8 +25,6 @@ implementation:
 
 version = "0.0.1"
 
-from pandas import DataFrame # the reason is to import this library that to convert the DataFrame to matrix
-
 def matrix(array):
     """
         this function will simply convert an array to matrix format instead using class

@@ -1,5 +1,7 @@
 from .algorithm import bubble_sort
 
+version = "0.0.1"
+
 # constants
 INF = float("inf")
 NAN = float("nan")

@@ -1,5 +1,7 @@
 from .mathx import cos,sqrt
 
+version = "0.0.1"
+
 g = 9.8
 G = 6.67430e-11
 c = 299792458
