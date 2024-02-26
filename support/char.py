@@ -1,4 +1,4 @@
-version = "0.0.1"
+version = "0.0.2"
 
 class char:
     def __init__(self,char):
@@ -10,10 +10,10 @@ class char:
         return self.__char
 
     def __add__(self,scaler):
-        return chr(ord(self.__char) + 1)
+        return chr(ord(self.__char) + scaler)
     
     def __sub__(self,scaler):
-        return chr(ord(self.__char) - 1)
+        return chr(ord(self.__char) - scaler)
 
     def lower_case(self):
         ascii_value = ord(self.__char)

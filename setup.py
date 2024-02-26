@@ -2,14 +2,15 @@ from setuptools import setup,find_packages
 
 setup(
     name = "support",
-    version = "0.0.1",
+    version = "0.1.0",
     author = "Sahil Rajwar",
     license = "MIT",
     author_email = "",
     description = "a tiny python library to make things easier",
     packages = find_packages(),
     install_requires = [
-        "pandas"
+        "pandas",
+        "numpy"
     ],
     classifiers = [
         "Intended Audience :: Developers",
@@ -18,6 +19,6 @@ setup(
         "Programming Language :: Python :: 3"        
     ],
     urls = {
-        "https://github.com/Sahil-Rajwar-2004/Support"
+        "https://github.com/Sahil-Rajwar-2004/support"
     }
 )

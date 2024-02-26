@@ -10,7 +10,7 @@ for more detailed information on the methods and functions provided, please refe
 
 contributor: Sahil Rajwar
 author: Sahil Rajwar
-homepage: https://github.com/Sahil-Rajwar-2004/Numerals
+homepage: https://github.com/Sahil-Rajwar-2004/support
 
 implementation:
     >>> from support.matrix import matrix       # importing essential library
@@ -23,7 +23,7 @@ implementation:
             ],shape = (3, 3))
 """
 
-version = "0.0.1"
+version = "0.0.2"
 
 def matrix(array):
     """
@@ -133,7 +133,6 @@ class Matrix:
     # initialization
     def __init__(self,array):
         self.__check_validity(array)
-        ##self.__check_columns(array)
         self.__matrix = array
         self.__row = len(array)
         self.__column = len(array[0])
@@ -146,7 +145,7 @@ class Matrix:
         representation = "matrix([\n"
         
         if len(self.__matrix) > 10:
-            # Show only first 5 rows
+            # show only first 5 rows
             for row in self.__matrix[:5]:
                 representation += "  ["
                 for x in row:
@@ -155,9 +154,9 @@ class Matrix:
                     else:
                         raise TypeError(f"type '{type(x).__name__}' isn't supported in matrix")
                 representation += "]\n"
-            # Add ellipsis
+            # add ellipsis
             representation += "  ...\n" 
-            # Show last 5 rows
+            # show last 5 rows
             for row in self.__matrix[-5:]:
                 representation += "  ["
                 for x in row:
@@ -167,7 +166,7 @@ class Matrix:
                         raise ValueError(f"type '{type(x).__name__}' isn't supported in matrix")
                 representation += "]\n"
         else:
-            # Show all rows if less than or equal to 10
+            # show all rows if less than or equal to 10
             for row in self.__matrix:
                 representation += "  ["
                 for x in row:
@@ -237,12 +236,6 @@ class Matrix:
     def __iter__(self):
         for row in self.__matrix:
             yield row
-
-#    def __check_columns(self,array):
-#        column = array[0]
-#        for x in array:
-#            if len(x) != len(column):
-#                raise ValueError(f"length of an array should be equal to {len(column)}: {len(column)} != {len(x)}")
 
     def __count_digits(self):
         initial = 1
@@ -405,7 +398,7 @@ class Matrix:
     def scale(self,scaler):
         return matrix([[x * scaler for x in row] for row in self.__matrix])
     
-    def reshape(self,n):
+    def reshape(self,dimension):
         size = self.size[0]
         if dimension[0] * dimension[1] == size:
             result = zeros(dimension)
@@ -430,27 +423,45 @@ class Matrix:
         return matrix(self.__matrix[index:])
 
     def remove_row(self,index):
+        """
+            remove row at a given index
+
+            Args:
+                index (int): specific row to delete
+
+            Returns:
+                Matrix: the same matrix with removed row at an index
+
+            Example:
+                >>> x = Matrix([[1, 2, 3],[4, 5, 6]])
+                >>> x.remove_row(index = 1)
+                matrix([
+                  [  1  2  3 ]
+                  [  7  8  9 ]
+                ],shape = (2, 3))
+
+        """
         if index < 0 or index >= self.__row:
             raise IndexError("index out of range!")
-        new_matrix = [row for i,row in enumerate(self.__matrix) if i != index]
-        return matrix(new_matrix)
+        self.__matrix = [row for i,row in enumerate(self.__matrix) if i != index]
+        return matrix(self.__matrix)
 
     def remove_column(self,index):
         if index < 0 or index >= self.__column:
             raise IndexError("index out of range!")
-        new_matrix = [[row[i] for i in range(self.__column) if i != index] for row in self.__matrix]
-        return matrix(new_matrix)
+        self.__matrix = [[row[i] for i in range(self.__column) if i != index] for row in self.__matrix]
+        return matrix(self.__matrix)
 
     def add_row(self,row,index = None):
         """
-        Adds a new row to the matrix.
+        adds a new row to the matrix.
 
         Args:
-            row (list): The row to be added.
-            index (int or None): The index at which to add the row. If None, the row is added at the end.
+            row (list): the row to be added.
+            index (int or None): the index at which to add the row. If None, the row is added at the end.
 
         Returns:
-            Matrix: A new matrix with the added row.
+            Matrix: a new matrix with the added row.
 
         Example:
             >>> x = Matrix([[1, 2, 3], [4, 5, 6]])
@@ -478,14 +489,14 @@ class Matrix:
 
     def add_column(self,column,index = None):
         """
-        Adds a new column to the matrix.
+        adds a new column to the matrix.
 
         Args:
-            column (list): The column to be added.
-            index (int or None): The index at which to add the column. If None, the column is added at the end.
+            column (list): the column to be added.
+            index (int or None): the index at which to add the column. If None, the column is added at the end.
 
         Returns:
-            Matrix: A new matrix with the added column.
+            matrix: a new matrix with the added column.
 
         Example:
             >>> x = Matrix([[1, 2], [3, 4]])

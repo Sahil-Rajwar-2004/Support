@@ -17,7 +17,7 @@ def binomial_dist(n_trials,rand_num,p):
     if not 0 <= p <= 1:
         raise ValueError("probability is always lies between 0 and 1")
     q = 1 - p
-    return combination(n_trials,rand_num) * p ** rand_num * q ** (n_trails - rand_num)
+    return combination(n_trials,rand_num) * p ** rand_num * q ** (n_trials - rand_num)
 
 def mean(array):
     return sum(array) / len(array)
