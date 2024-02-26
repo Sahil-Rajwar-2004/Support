@@ -1,5 +1,5 @@
 """
-support (v-0.1.0):
+support (v-0.1.1):
 =================
 
 this is the minimalist and genral purpose python library
@@ -11,7 +11,7 @@ that includes:
   | array           |   (v-0.0.1) |
   | boolean_algebra |   (v-0.0.1) |
   | char            |   (v-0.0.2) |
-  | complex         |   (v-0.0.1) |
+  | complex         |   (v-0.0.2) |
   | file            |   (v-0.0.1) |
   | iter            |   (v-0.0.1) |
   | mapping         |   (v-0.0.1) |
@@ -25,4 +25,6 @@ that includes:
   +-------------------------------+
 """
 
-version = "0.1.0"
+# Author: Sahil Rajwar
+
+version = "0.1.1"

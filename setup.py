@@ -2,7 +2,7 @@ from setuptools import setup,find_packages
 
 setup(
     name = "support",
-    version = "0.1.0",
+    version = "0.1.1",
     author = "Sahil Rajwar",
     license = "MIT",
     author_email = "",

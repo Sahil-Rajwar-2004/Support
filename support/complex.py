@@ -4,7 +4,7 @@ Complex:
 
 A minimal Python library for working with complex numbers, which are used in engineering and solving equations that involve the square root of negative numbers.
 
-Version: 0.0.1
+Version: 0.0.2
 
 Author: Sahil Rajwar
 
@@ -51,7 +51,7 @@ print(z1)  # Output: [3.0,4.0]
 
 import numpy as np
 
-version = "0.0.1"
+version = "0.0.2"
 
 def euler(x):
     return Complex(np.cos(x),np.sin(x))
@@ -141,8 +141,8 @@ class Complex:
             real_part = mod * np.cos(arg)
             imag_part = mod * np.sin(arg)
             return Complex(real_part,imag_part)
-        elif isinstance(other,complex) and isinstance(other,Complex):
-            raise TypeError(f"to find complex to the power complex isn't available/supported for version-0.0.1 and below it of complex module, try to install newer version or wait for update!")
+        elif isinstance(other,complex) or isinstance(other,Complex):
+            raise TypeError(f"to find the complex raise to the power complex isn't available/supported for version-0.0.2 of or below in complex.py module, try to install newer version or wait for update!")
         else:
             raise TypeError(f"'{type(other).__name__}' isn't compatible with 'Complex'!")
 

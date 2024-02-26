@@ -1,0 +1,20 @@
+support changelog
+=================
+
+
+1. version (0.0.1):
+    initial release
+
+2. version (0.1.0):
+    complex.py module added
+
+3. version (0.1.1):
+    bug found and fixed in complex.py module at line number 144 only
+
+    before:
+    144 elif isinstance(other,complex) or isinstance(other,Complex):
+    145     raise TypeError(f"to find complex to the power complex isn't available/supported for version-0.1.1 and below it of complex module, try to install newer version or wait for update!")
+
+    after:
+    144 elif isinstance(other,complex) or isinstance(other,Complex):
+    145     raise TypeError(f"to find the complex raise to the power complex isn't available/supported for version-0.0.2 of or below in complex.py module, try to install newer version or wait for update!")
