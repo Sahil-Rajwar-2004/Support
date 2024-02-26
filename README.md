@@ -10,5 +10,5 @@ python setup.py sdist bdist_wheel
 
 cd dist
 
-pip install `<wheel-file>`
+pip install <wheel-file>
 ```
