@@ -10,12 +10,12 @@ keep in mind that this whole module is written for cartesian plane only
 from .mathx import sqrt,find_min
 import numpy as np
 
-version = "0.0.1"
+version = "0.0.2"
 
 def vector(array):
     if len(array) == 3:
         return Vector(float(array[0]),float(array[1]),float(array[2]))
-    return f"length of an array should be equals to 3: {len(array)} != 3."
+    raise ValueError(f"length of an array should be equals to 3: {len(array)} != 3")
 
 class Vector:
     def __init__(self,i = 0.0,j = 0.0,k = 0.0):
@@ -59,7 +59,7 @@ class Vector:
         elif component.lower() == "k":
             return self.k
         else:
-            return f"unidentified component: expected i,I,j,J,k or K but got {component}!"
+            raise ValueError(f"unidentified component: expected i,I,j,J,k or K but got {component}!")
         
     def __setitem__(self,component,value):
         if component.lower() == "i":
@@ -69,12 +69,18 @@ class Vector:
         elif component.lower() == "k":
             self.k = value
         else:
-            return f"unidentified component: expected i,I,j,J,k or K but got {component}!"
+            raise ValueError(f"unidentified component: expected i,I,j,J,k or K but got {component}!")
 
     def __eq__(self,vector):
         if self.i == vector.i and self.j == vector.j and self.k == vector.k:
             return True
         return False
+
+    def __neg__(self):
+        return Vector(-self.i,-self.j,-self.k)
+
+    def __pos__(self):
+        return Vector(self.i,self.j,self.k)
 
     def __ne__(self,vector):
         if not self == vector:
@@ -146,7 +152,7 @@ class Vector:
         else:
             raise TypeError(f"expected integer value but got {type(index).__name__}!")
 
-    def gradient(self, delta=1.0):
+    def gradient(self,delta=1.0):
         """
         computes the gradient of the vector.
 
@@ -161,6 +167,9 @@ class Vector:
         dy = (self + Vector(0,delta,0) - self) / delta
         dz = (self + Vector(0,0,delta) - self) / delta
         return Vector(dx,dy,dz)
+
+    def to_list(self):
+        return [self.i,self.j,self.k]
 
     def octant(self):
         if self.i == 0 and self.j == 0 and self.k == 0:
@@ -182,5 +191,5 @@ class Vector:
         elif self.i > 0 and self.j < 0 and self.k < 0:
             return 8
         else:
-            return "an error occurred"
+            raise ValueError("an error occurred!")
 

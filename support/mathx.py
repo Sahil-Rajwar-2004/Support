@@ -1,6 +1,7 @@
 from .algorithm import bubble_sort
+from scipy.integrate import quad
 
-version = "0.0.1"
+version = "0.1.0"
 
 # constants
 INF = float("inf")
@@ -38,7 +39,7 @@ def moving_avg(array,window_size):
 
 def exp_moving_avg(array,alpha):
     if not 0 <= alpha <= 1:
-        raise ValueError(f"value of alpha or smoothing factor should lie between 0 and 1")
+        raise ValueError(f"value of alpha or smoothing factor must lie between 0 and 1")
     avgs = [array[0]]
     for i in range(1,len(array)):
         avgs.append(alpha * array[i] + (1 - alpha) * avgs[-1])
@@ -125,17 +126,17 @@ def cc(X,Y):
 
 def mean_squared_error(actual,predicted):
     if len(actual) != len(predicted):
-        return -1
+        raise ValueError(f"actual and predicted must have the same the size {len(actual)} != {len(predicted)}!")
     return summation([(actual[i] - predicted[i])**2 for i in range(len(actual))]) / len(actual)
 
 def mean_absolute_error(actual,predicted):
     if len(actual) != len(predicted):
-        return -1
+        raise ValueError(f"actual and predicted must have the same the size {len(actual)} != {len(predicted)}!")
     return summation([absolute(actual[i] - predicted[i]) for i in range(len(actual))]) / len(actual)
 
 def root_mean_squared_error(actual,predicted):
     if len(actual) != len(predicted):
-        return -1
+        raise ValueError(f"actual and predicted must have the same the size {len(actual)} != {len(predicted)}!")
     return sqrt(mean_squared_error(actual,predicted))
 
 def mean_absolute_deviation(array):
@@ -144,13 +145,24 @@ def mean_absolute_deviation(array):
 
 def covariance(X,Y,sample = False):
     if len(X) != len(Y):
-        return -1
+        raise ValueError("X and Y must have the same size!")
     N = len(X)
     if sample:
-        N = N - 1
+        N -= 1
     meanX = mean(X)
     meanY = mean(Y)
     return summation([(x - meanX)*(y - meanY) for x,y in zip(X,Y)]) / N
+
+def discrete_expectation(X,P):
+    if len(X) != len(P):
+        raise ValueError("X and P must have the same size!")
+    for x in P:
+        if not x <= 1:
+            raise ValueError("probability always lies between 0 and 1 inclusively!")
+    return summation(x * p for x,p in zip(X,P))
+
+def continous_expectation(fn,lower_bound,upper_bound):
+    return quad(lambda x: x * fn(x),lower_bound,upper_bound)[0]
 
 def zscore(array):
     m = mean(array)
@@ -289,7 +301,7 @@ def combination(n,r):
 
 def precentage(part,whole):
     if part > whole:
-        return f"whole is always greater than the part: part({part}) > whole({whole})"
+        raise ValueError(f"whole is always greater than the part: part({part}) > whole({whole})")
     return (part / whole) * 100
 
 def precentage_change(initial_value,final_value):
@@ -390,6 +402,20 @@ def arange(start,end,step):
         start += step
         result.append(start)
     return result
+
+def arithmetic_progression(start,diff,n):
+    progression = []
+    for i in range(n):
+        term = start + i * diff
+        progression.append(term)
+    return progression
+
+def geometric_progression(start,ratio,n):
+    progression = []
+    for i in range(n):
+        term = start * (ratio ** i)
+        progression.append(term)
+    return progression
 
 def notation(number):
     return f"{number:.8e}"

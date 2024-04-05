@@ -10,124 +10,39 @@ for more detailed information on the methods and functions provided, please refe
 
 contributor: Sahil Rajwar
 author: Sahil Rajwar
-homepage: https://github.com/Sahil-Rajwar-2004/support
-
-implementation:
-    >>> from support.matrix import matrix       # importing essential library
-    >>> x = matrix([[1,2,3],[4,5,6],[7,8,9]])   # call the function matrix() to create matrix from nested list
-    >>> print(x)
-    >>> matrix([
-              [ 1  2  3 ]
-              [ 4  5  6 ]
-              [ 7  8  9 ]
-            ],shape = (3, 3))
+module-homepage: https://github.com/Sahil-Rajwar-2004/support/blob/master/support/matrix.py
 """
 
-version = "0.0.2"
+import numpy as np
+
+version = "0.0.3"
 
 def matrix(array):
-    """
-        this function will simply convert an array to matrix format instead using class
-        NOTE: this function will accept only `2D` arrays
-
-        parameters:
-            array: 2D list only as an input
-
-        implementations:
-            >>> from support.matrix import matrix
-            >>> x = matrix([[1,2,3],[4,5,6],[6,7,8]])
-            >>> print(x)
-            >>> matrix([
-                  [ 1  2  3 ]
-                  [ 4  5  6 ]
-                  [ 7  8  9 ]
-                ],shape = (3, 3))
-    """
+    if isinstance(array,Matrix):
+        return array
     return Matrix(array)
 
 def zeros(dimension):
-    """
-        this function take dimension (rows,columns) and return the matrix of shape (rows,columns)
-        and fill each element with zero values
-
-        parameters:
-            dimension: tuple of int datatype row and column (row,column)
-
-        implementations:
-            >>> from support.matrix import zeros
-            >>> x = zeros((2,3))
-            >>> print(x)
-            >>> matrix([
-                  [ 0  0  0 ]
-                  [ 0  0  0 ]
-                ],shape = (2, 3))
-    """
     return Matrix([[0 for x in range(dimension[1])] for y in range(dimension[0])])
 
 def ones(dimension):
-    """
-        this function will create matrix where each element filled with value 1
-        of dimension given by the user
-
-        parameters:
-            dimension: tuple of int datatype row and column (row,column)
-
-        implementations:
-            >>> from support.matrix import ones
-            >>> x = ones((2,3))
-            >>> print(x)
-            >>> matrix([
-                  [ 1  1  1 ]
-                  [ 1  1  1 ]
-                ],shape = (2, 3))
-    """
     return Matrix([[1 for x in range(dimension[1])] for y in range(dimension[0])])
 
-
 def fill(value,dimension):
-    """
-        this function will create matrix where each element filled with value and 
-        dimension which will be given by the user!
-       
-        parameters:
-            value: any datatype
-            dimension: tuple of int datatype row and column (row,column)
-        
-        implementations:
-            >>> from support.matrix import fill
-            >>> x = fill((2,3),float("nan"))
-            >>> print(x)
-            >>> matrix([
-                  [ nan  nan  nan ]
-                  [ nan  nan  nan ]
-                ],shape = (2, 3))
-    """
     return Matrix([[value for x in range(dimension[1])] for y in range(dimension[0])])
 
-def identity(row_col):
-    """
-        this function will create square matrix, a square matrix have same number of rows and columns
-        rows = columns. And fill the diagonal from top left to bottom right with value 1
-
-        parameters:
-            dimensions:
-        
-        implementations:
-            >>> from support.matrix import identity
-            >>> x = identity(row_col)
-            >>> print(x)
-            >>> matrix([
-                  [ 1  0  0 ]
-                  [ 0  1  0 ]
-                  [ 0  0  1 ]
-                ],shape = (3, 3))
-    """
-    result = zeros((row_col,row_col))
-    for i in range(row_col):
-        for j in range(row_col):
-            if i == j:
-                result[i][j] = 1
+def eye(N):
+    result = zeros((N,N))
+    for i in range(N):
+        result[i][i] = 1
     return result
+
+def scaler(values):
+    length = len(values)
+    mat = zeros((length,length))
+    for i in range(length):
+        mat[i][i] = values[i]
+    return mat
 
 class Matrix:
     # initialization
@@ -136,9 +51,30 @@ class Matrix:
         self.__matrix = array
         self.__row = len(array)
         self.__column = len(array[0])
-        self.dim = self.shape = (self.__row,self.__column)
-        self.size = tuple([self.__row * self.__column])
+        self.__ndim = self.__shape = (self.__row,self.__column)
+        self.__size = tuple([self.__row * self.__column])
 
+    @property
+    def length(self):
+        return len(self.__matrix)
+
+    @property
+    def ndim(self):
+        return self.__ndim
+
+    @property
+    def shape(self):
+        return self.__shape
+
+    @property
+    def size(self):
+        return self.__size
+
+    def __repr__(self):
+        if isinstance(self,Matrix):
+            return f"<Matrix object at {hex(id(self))}, shape = ({self.__row},{self.__column}), size = {self.__size}>"
+
+    """
     def __repr__(self):
         digits = self.__count_digits()
         gaps = " " * (digits)
@@ -177,48 +113,25 @@ class Matrix:
                 representation += "]\n" 
         representation += f"],shape = {self.shape})"
         return representation
+    """
+
+    def numpy(self):
+        return np.array(self.__matrix)
 
     def __getitem__(self,row,column = None):
-        # get item using index
-
-        """
-            >>> from support.matrix import matrix
-            >>> x = matrix([[1,2,3],[4,5,6],[7,8,9]])
-            >>> print(x[0])
-            >>> [1, 2, 3]
-            >>> print(x[0][0])
-            >>> 1
-        """
-
         if row is not None and column is None:
             return self.__matrix[row]
         elif row is not None and column is not None:
             return self.__matrix[row][column]
 
     def __setitem__(self,row,value,column = None):
-        """
-            >>> from support.matrix import matrix
-            >>> x = matrix([[1,2,3],[4,5,6],[7,8,9]])
-            >>> x[0] = [12,13,14]
-            >>> print(x)
-            >>> matrix([
-                  [ 12  13  14 ]
-                  [  4   5   6 ]
-                  [  7   8   9 ]
-                ])
-            >>> x[0][0] = 100
-            >>> print(x)
-            >>> matrix([
-                  [ 100   13   14 ]
-                  [   4    5    6 ]
-                  [   7    8    9 ]
-                ])
-        """
-        if row != None and column == None:
+        if row is not None and column is None:
             if len(self.__matrix[row]) == len(value):
                 self.__matrix[row] = value
-        if row != None and column != None:
+            return
+        if row is not None and column is not None:
             self.__matrix[row][column] = value
+            return
 
     def __eq__(self,other):
         if isinstance(other,Matrix):
@@ -243,7 +156,7 @@ class Matrix:
             for item in row:
                 initial = max(initial, len(str(item)))
         return initial
-    
+
     def __check_validity(self,array):
         for rows in array:
             if not isinstance(rows,list):
@@ -256,6 +169,13 @@ class Matrix:
             if len(x) != len(column):
                 raise ValueError(f"columns of the matrix must be equal")
         return True
+
+    def __neg__(self):
+        new_mat = [[-self.__matrix[row][col] for col in range(self.__column)] for row in range(self.__row)]
+        return matrix(new_mat)
+
+    def __pos__(self):
+        return Matrix(self.__matrix)
 
     def __add__(self,other):
         if isinstance(other,(int,float)):
@@ -348,7 +268,7 @@ class Matrix:
             return self.__matrix[0][0] * self.__matrix[1][1] - self.__matrix[0][1] * self.__matrix[1][0]
         det = 0
         for j in range(self.__column):
-            det += ((-1) ** j) * self.__matrix[0][j] * self.__minor(0, j).determinant()
+            det += ((-1) ** j) * self.__matrix[0][j] * self.__minor(0,j).determinant()
         return det
 
     def __minor(self, row, column):
@@ -369,11 +289,11 @@ class Matrix:
         return self.__row == self.__column
     
     def is_column(self):
-        return self.__row == 1
+        return self.__column == 1
 
     def is_row(self):
-        return self.__column == 1
-    
+        return self.__row == 1
+   
     def trace(self):
         if not self.is_square():
             raise ValueError(f"given matrix should have equal number of rows and columns: {self.__row} != {self.__column}")
@@ -416,31 +336,12 @@ class Matrix:
         return result
     
     def head(self,index = 5):
-        #zero_matrix = zeros((self.__row,self.__column))
         return matrix(self.__matrix[:index])
     
     def tail(self,index = 5):
         return matrix(self.__matrix[index:])
 
     def remove_row(self,index):
-        """
-            remove row at a given index
-
-            Args:
-                index (int): specific row to delete
-
-            Returns:
-                Matrix: the same matrix with removed row at an index
-
-            Example:
-                >>> x = Matrix([[1, 2, 3],[4, 5, 6]])
-                >>> x.remove_row(index = 1)
-                matrix([
-                  [  1  2  3 ]
-                  [  7  8  9 ]
-                ],shape = (2, 3))
-
-        """
         if index < 0 or index >= self.__row:
             raise IndexError("index out of range!")
         self.__matrix = [row for i,row in enumerate(self.__matrix) if i != index]
@@ -453,32 +354,6 @@ class Matrix:
         return matrix(self.__matrix)
 
     def add_row(self,row,index = None):
-        """
-        adds a new row to the matrix.
-
-        Args:
-            row (list): the row to be added.
-            index (int or None): the index at which to add the row. If None, the row is added at the end.
-
-        Returns:
-            Matrix: a new matrix with the added row.
-
-        Example:
-            >>> x = Matrix([[1, 2, 3], [4, 5, 6]])
-            >>> x.add_row([7, 8, 9])
-            matrix([
-              [ 1  2  3 ]
-              [ 4  5  6 ]
-              [ 7  8  9 ]
-            ],shape = (3, 3))
-            >>> x.add_row([10, 11, 12], index=1)
-            matrix([
-              [  1  2  3 ]
-              [ 10 11 12 ]
-              [  4  5  6 ]
-              [  7  8  9 ]
-            ],shape = (4, 3))
-        """
         if len(row) != self.__column:
             raise ValueError("The length of the row must match the number of columns in the matrix.")
         if index is None:
@@ -488,29 +363,6 @@ class Matrix:
         return Matrix(new_matrix)
 
     def add_column(self,column,index = None):
-        """
-        adds a new column to the matrix.
-
-        Args:
-            column (list): the column to be added.
-            index (int or None): the index at which to add the column. If None, the column is added at the end.
-
-        Returns:
-            matrix: a new matrix with the added column.
-
-        Example:
-            >>> x = Matrix([[1, 2], [3, 4]])
-            >>> x.add_column([5, 6])
-            matrix([
-              [ 1  2  5 ]
-              [ 3  4  6 ]
-            ], shape = (2, 3))
-            >>> x.add_column([7, 8], index=1)
-            matrix([
-              [ 1  7  2  ]
-              [ 3  8  4  ]
-            ], shape = (2, 3))
-        """
         if len(column) != self.__row:
             raise ValueError("The length of the column must match the number of rows in the matrix.")
         if index is None:
@@ -518,5 +370,91 @@ class Matrix:
         else:
             new_matrix = [self.__matrix[i][:index] + [column[i]] + self.__matrix[i][index:] for i in range(self.__row)]
         return Matrix(new_matrix)
+
+    def to_list(self):
+        return self.__matrix
+
+    # Ops
+    def sin(self):
+        answer = []
+        for row in self.__matrix:
+            slot = []
+            for item in row:
+                slot.append(np.sin(item))
+            answer.append(slot)
+        return matrix(answer)
+    
+    def cos(self):
+        answer = []
+        for row in self.__matrix:
+            slot = []
+            for item in row:
+                slot.append(np.cos(item))
+            answer.append(slot)
+        return matrix(answer)
+
+    def tan(self):
+        answer = []
+        for row in self.__matrix:
+            slot = []
+            for item in row:
+                slot.append(np.tan(item))
+            answer.append(slot)
+        return matrix(answer)
+
+    def cot(self):
+        answer = []
+        for row in self.__matrix:
+            slot = []
+            for item in row:
+                slot.append(1 / np.tan(item))
+            answer.append(slot)
+        return matrix(answer)
+
+    def sec(self):
+        answer = []
+        for row in self.__matrix:
+            slot = []
+            for item in row:
+                slot.append(1 / np.cos(item))
+            answer.append(slot)
+        return matrix(answer)
+
+    def cosec(self):
+        answer = []
+        for row in self.__matrix:
+            slot = []
+            for item in row:
+                slot.append(1 / np.sin(item))
+            answer.append(slot)
+        return matrix(answer)
+
+    def log(self):
+        answer = []
+        for row in self.__matrix:
+            slot = []
+            for item in row:
+                slot.append(np.log(item))
+            answer.append(slot)
+        return matrix(answer)
+
+    def sqrt(self):
+        answer = []
+        for row in self.__matrix:
+            slot = []
+            for item in row:
+                slot.append(np.sqrt(item))
+            answer.append(slot)
+        return matrix(answer)
+
+    def cbrt(self):
+        answer = []
+        for row in self.__matrix:
+            slot = []
+            for item in row:
+                slot.append(np.cbrt(item))
+            answer.append(slot)
+        return matrix(answer)
+
 
 

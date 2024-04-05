@@ -4,7 +4,7 @@ def linear_search(array,target):
     for x in range(len(array)):
         if target == array[x]:
             return x
-    return -1
+    return None
 
 def binary_search(array,target):
     array = quick_sort(array)
@@ -18,7 +18,7 @@ def binary_search(array,target):
             start = mid + 1
         else:
             return mid
-    return -1
+    return None
 
 def bubble_sort(array):
     length = len(array)
@@ -55,3 +55,4 @@ def selection_sort(array):
                 min_index = y
         array[x],array[min_index] = array[min_index],array[x]
     return array
+

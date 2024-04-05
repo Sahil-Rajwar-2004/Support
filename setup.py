@@ -2,7 +2,7 @@ from setuptools import setup,find_packages
 
 setup(
     name = "support",
-    version = "0.1.1",
+    version = "0.2.0",
     author = "Sahil Rajwar",
     license = "MIT",
     author_email = "",
@@ -10,7 +10,8 @@ setup(
     packages = find_packages(),
     install_requires = [
         "pandas",
-        "numpy"
+        "numpy",
+        "scipy"
     ],
     classifiers = [
         "Intended Audience :: Developers",

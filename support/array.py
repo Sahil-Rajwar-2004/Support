@@ -1,6 +1,7 @@
 from .matrix import matrix
+import numpy as np
 
-version = "0.0.1"
+version = "0.0.2"
 
 def array(array):
     return Array(array)
@@ -40,66 +41,6 @@ class Array:
             self.__row = len(self.__array)
             self.__column = len(self.__array[0])
 
-    def __repr__(self):
-        digits = self.__count_digits()
-        gaps = " " * digits
-        representation = "array(["
-        if self.__validate:
-            if len(self.__array) > 10:
-                # Display first five elements
-                for x in self.__array[:5]:
-                    if len(str(x)) > 8:
-                        x = f"{x:.5e}"
-                    representation += " " + gaps[:digits - len(str(x))] + f"{x}" + " "
-                # Omitted elements placeholder
-                representation += " ..."
-                # Display last five elements
-                for x in self.__array[-5:]:
-                    if len(str(x)) > 8:
-                        x = f"{x:.5e}"
-                    representation += " " + gaps[:digits - len(str(x))] + f"{x}" + " "
-            else:
-                # Display all elements
-                for x in self.__array:
-                    if len(str(x)) > 8:
-                        x = f"{x:.5e}"
-                    representation += " " + gaps[:digits - len(str(x))] + f"{x}" + " "
-        else:
-            representation += "\n"
-            if len(self.__array) > 10:
-                # Show only first 5 rows
-                for row in self.__array[:5]:
-                    representation += "  ["
-                    for x in row:
-                        if isinstance(x,(int,float)):
-                            representation += " " + gaps[:digits - len(str(x))] + f"{x}" + " "
-                        else:
-                            raise TypeError(f"type '{type(x).__name__}' isn't supported in matrix")
-                    representation += "]\n"
-                # Add ellipsis
-                representation += "  ...\n" 
-                # Show last 5 rows
-                for row in self.__array[-5:]:
-                    representation += "  ["
-                    for x in row:
-                        if isinstance(x,(int,float)):
-                            representation += " " + gaps[:digits - len(str(x))] + f"{x}" + " "
-                        else:
-                            raise ValueError(f"type '{type(x).__name__}' isn't supported in matrix")
-                    representation += "]\n"
-            else:
-                # Show all rows if less than or equal to 10
-                for row in self.__array:
-                    representation += "  ["
-                    for x in row:
-                        if isinstance(x,(int,float)):
-                            representation += " " + gaps[:digits - len(str(x))] + f"{x}" + " "
-                        else:
-                            raise ValueError(f"type '{type(x).__name__}' isn't supported in matrix")
-                    representation += "]\n" 
-        representation += f"],shape = {self.shape})"
-        return representation 
-
     def __check_validity(self,array):
         initial = array[0]
         # check if it's a 2D array or 1D array
@@ -117,7 +58,17 @@ class Array:
             return True # True if it's a 1D array
         else:
             raise TypeError(f"'{type(initial).__name__}' isn't compatible for array!")
-    
+
+    @property
+    def length(self):
+        return len(self.__array)
+
+    def __repr__(self):
+        return f"<Array object at {hex(id(self))}, length = {self.length}>"
+
+    def numpy(self):
+        return np.array(self.__array)
+
     def __len__(self):
         return len(self.__array)
 
@@ -199,13 +150,13 @@ class Array:
             if isinstance(other,(int,float)):
                 for i in range(len(self.__array)):
                     result.append(other * self.__array[i])
-                return array(result)
+                return Array(result)
             elif isinstance(other,Array):
                 if len(self.__array) != len(other.__array):
                     raise ValueError("length of arrays must be equal")
                 for x,y in zip(self.__array,other.__array):
                     result.append(x * y)
-                return result
+                return Array(result)
         else:
             if isinstance(other,(int,float)):
                 return Array([[x * other for x in row] for row in self.__array])
@@ -218,7 +169,7 @@ class Array:
                         for j in range(other.__column):
                             for k in range(self.__column):
                                 result.__array[i][j] += self.__array[i][k] * other.__array[k][j]
-                    return result
+                    return Array(result)
                 else:
                     raise ValueError(f"number of columns in the first matrix must be equal to the number of rows in the second matrix for multiplication. {self.__column} != {other.__row}")
             else:
@@ -230,17 +181,6 @@ class Array:
     def tail(self,n = 5):
         return array(self.__array[-n:])
 
-    def __count_digits(self):
-        initial = 1
-        if self.__validate:
-            for item in self.__array:
-                initial = max(initial,len(str(item)))
-        else:
-            for rows in self.__array:
-                for columns in rows:
-                    initial = max(initial,len(str(columns)))
-        return initial
-
     def to_matrix(self):
         return matrix(self.__array)
 
@@ -250,11 +190,11 @@ class Array:
     def flatten(self):
         if self.__validate:
             return self
-        result = []
-        for row in range(self.__row):
-            for column in range(self.__column):
-                result.append(self.__array[row][column])
-        return array(result)
+        for x in self.__array:
+            if type(x) == type(list()):
+                yield from self.flatten(x)
+            else:
+                yield x
 
     def reduced_sum(self,axis = None,keepdims = False):
         if self.__validate and axis is None and keepdims == False:
