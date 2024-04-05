@@ -1,4 +1,4 @@
-# ***Support (v-0.1.1)***
+# ***Support (v-0.2.0)***
 
 ## installation
 ```bash
