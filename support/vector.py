@@ -6,7 +6,6 @@ a minimal python module to solve vectors related problems
 keep in mind that this whole module is written for cartesian plane only
 """
 
-
 from .mathx import sqrt,find_min
 import numpy as np
 
@@ -18,7 +17,7 @@ def vector(array):
     raise ValueError(f"length of an array should be equals to 3: {len(array)} != 3")
 
 class Vector:
-    def __init__(self,i = 0.0,j = 0.0,k = 0.0):
+    def __init__(self,i:int|float = 0.0,j:int|float = 0.0,k:int|float = 0.0):
         self.i = i
         self.j = j
         self.k = k
@@ -60,7 +59,7 @@ class Vector:
             return self.k
         else:
             raise ValueError(f"unidentified component: expected i,I,j,J,k or K but got {component}!")
-        
+
     def __setitem__(self,component,value):
         if component.lower() == "i":
             self.i = value
@@ -86,11 +85,11 @@ class Vector:
         if not self == vector:
             return True
         return False
-    
+
     def __iter__(self):
         self.__index = 0
         return self
-    
+
     def __next__(self):
         if self.__index < len(self.__components):
             result = self.__components[self.__index]
@@ -101,7 +100,7 @@ class Vector:
 
     def is_orthogonal(self,vector):
         return self * vector == 0
-    
+
     def is_zero(self):
         if self.i == 0.0 and self.j == 0.0 and self.k == 0.0:
             return True
@@ -123,14 +122,14 @@ class Vector:
 
     def magnitude(self):
         return sqrt(self * self)
-    
+
     def distance(self,vector):
         return sqrt((self.i - vector.i)**2 + (self.j - vector.j)**2 + (self.k- vector.k)**2)
-    
+
     def unit(self):
         mag = self.magnitude()
         return Vector(self.i / mag,self.j / mag,self.k / mag)
-    
+
     def angle(self,vector):
         dot = self * vector
         mag = self.magnitude() * vector.magnitude()
@@ -152,24 +151,16 @@ class Vector:
         else:
             raise TypeError(f"expected integer value but got {type(index).__name__}!")
 
-    def gradient(self,delta=1.0):
-        """
-        computes the gradient of the vector.
-
-        parameters:
-        - delta (float): the spacing between points for finite differences.
-
-        returns:
-        - Vector: the gradient vector.
-        """
-        # Compute the gradient using finite differences
-        dx = (self + Vector(delta,0,0) - self) / delta
-        dy = (self + Vector(0,delta,0) - self) / delta
-        dz = (self + Vector(0,0,delta) - self) / delta
-        return Vector(dx,dy,dz)
-
     def to_list(self):
         return [self.i,self.j,self.k]
+
+    def gradient(self,vec):
+        if not isinstance(vec,Vector):
+            raise TypeError(f"")
+        diff_i = self.i - vec.i
+        diff_j = self.j - vec.j
+        diff_k = self.k - vec.k
+        return Vector(diff_i,diff_j,diff_k)
 
     def octant(self):
         if self.i == 0 and self.j == 0 and self.k == 0:

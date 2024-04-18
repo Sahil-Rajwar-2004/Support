@@ -2,7 +2,7 @@ from setuptools import setup,find_packages
 
 setup(
     name = "support",
-    version = "0.2.0",
+    version = "0.2.1",
     author = "Sahil Rajwar",
     license = "MIT",
     author_email = "",
@@ -17,7 +17,7 @@ setup(
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Libraries :: Studies",
         "License :: MIT",
-        "Programming Language :: Python :: 3"        
+        "Programming Language :: Python :: 3"
     ],
     urls = {
         "https://github.com/Sahil-Rajwar-2004/support"

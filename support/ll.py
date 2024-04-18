@@ -13,7 +13,7 @@ class LinkedList:
         self.__head = None
 
     def __repr__(self):
-        return self.__size
+        return f"<'LinkedList' object at {hex(id(self))}>"
 
     @property
     def size(self):
@@ -51,7 +51,7 @@ class LinkedList:
         if self.__head is None:
             raise ValueError("linked list is empty!")
         current = self.__head
-        new_node = Node(head)
+        new_node = Node(data)
         for _ in range(self.__size - 1):
             current = current.next
         new_node.next = current.next
@@ -62,7 +62,7 @@ class LinkedList:
         if self.__head is None:
             raise ValueError("linked list is empty!")
         self.__head = self.__head.next
-        self.__next -= 1
+        self.__size -= 1
 
     def remove_at_index(self,index):
         if not 0 <= index < self.__size:
@@ -90,7 +90,7 @@ class LinkedList:
     def find_max(self):
         if self.__head is None:
             raise ValueError("linked list is empty!")
-        max_value = -float("inf") 
+        max_value = -float("inf")
         current = self.__head
         for _ in range(self.__size):
             if max_value < current.data:

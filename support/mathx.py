@@ -7,19 +7,9 @@ version = "0.1.0"
 INF = float("inf")
 NAN = float("nan")
 PI = 3.1415926535897932384626433832795
-EXP = 2.7182818284590452353602874713527
+E = 2.7182818284590452353602874713527
 
 # functions
-def binomial_dist(n_trials,rand_num,p):
-    # p -> probability of having success
-    # q -> probability of having failure
-    # rand_num -> random variable also denoted by 'x'
-    # n_trials -> number of times an experment performerd
-    if not 0 <= p <= 1:
-        raise ValueError("probability is always lies between 0 and 1")
-    q = 1 - p
-    return combination(n_trials,rand_num) * p ** rand_num * q ** (n_trials - rand_num)
-
 def mean(array):
     return sum(array) / len(array)
 
@@ -63,7 +53,7 @@ def Range(array):
     return find_max(array) - find_min(array)
 
 def softmax(array,index = None):
-    exp_array = [EXP**x for x in array]
+    exp_array = [E**x for x in array]
     sum_array = sum(exp_array)
     softmax_array = [x / sum_array for x in exp_array]
     if index is None:
@@ -122,7 +112,7 @@ def cv(array):
     return (standard_deviation(array) / mean(array)) * 100
 
 def cc(X,Y):
-    return covariance(X,Y) / (standard_deviation(X) * standard_deviation(Y)) 
+    return covariance(X,Y) / (standard_deviation(X) * standard_deviation(Y))
 
 def mean_squared_error(actual,predicted):
     if len(actual) != len(predicted):
@@ -192,10 +182,10 @@ def definite_integral(function,lower_limit,upper_limit,max_iterations = 1000):
     return result
 
 def cos(x):
-    return ((EXP**(1j*x) + EXP**(-1j*x)) / 2).real
+    return ((E**(1j*x) + E**(-1j*x)) / 2).real
 
 def sin(x):
-    return ((EXP**(1j*x) - EXP**(-1j*x)) / 2j).real
+    return ((E**(1j*x) - E**(-1j*x)) / 2j).real
 
 def tan(x):
     return sin(x) / cos(x)
@@ -210,10 +200,10 @@ def cosec(x):
     return 1 / sin(x)
 
 def cosh(x):
-    return (EXP**x + EXP**-x) / 2
+    return (E**x + E**-x) / 2
 
 def sinh(x):
-    return (EXP**x - EXP**-x) / 2
+    return (E**x - E**-x) / 2
 
 def tanh(x):
     return sinh(x) / cosh(x)
@@ -233,7 +223,7 @@ def deg2rad(degree):
 def rad2deg(radian):
     return radian * 180 / PI
 
-def fibonacci(number):
+def fibonacci(number:int):
     if number <= 0:
         return -1
     elif number == 1:
@@ -243,24 +233,24 @@ def fibonacci(number):
     else:
         return fibonacci(number - 1) + fibonacci(number - 2)
 
-def factorial(number):
+def factorial(number:int):
     if not isinstance(number,int):
         return -1
     if number == 0:
         return 1
     return number * factorial(number - 1)
 
-def collatz_conjecture(number):
+def collatz_conjecture(number:int):
     sequence = [number]
     while number != 1:
         if number % 2 == 0:
-            number /= 2
+            number //= 2
         else:
             number = 3 * number + 1
         sequence.append(number)
     return sequence
 
-def palindrome(number):
+def palindrome(number:int):
     org = number
     reverse = 0
     while number > 0:
@@ -269,18 +259,18 @@ def palindrome(number):
         number //= 10
     return org == reverse
 
-def gcd(x,y):
+def gcd(x:int,y:int):
     while y != 0:
         x,y = y,x % y
     return absolute(x)
 
-def lcm(numbers):
+def lcm(numbers:list):
     lcm = numbers[0]
     for i in range(1, len(numbers)):
         lcm = lcm * numbers[i] // gcd(lcm, numbers[i])
     return lcm
 
-def quadratic_roots(a,b,c):
+def quadratic_roots(a:int|float,b:int|float,c:int|float):
     discriminant = b ** 2 - 4 * a * c
     if discriminant < 0:
         return -1
@@ -289,12 +279,12 @@ def quadratic_roots(a,b,c):
     else:
         return [(-b + sqrt(discriminant)) / (2*a),(-b - sqrt(discriminant)) / (2*a)]
 
-def permutation(n,r):
+def permutation(n:int,r:int):
     if n < r:
         return None
     return factorial(n) / factorial(n - r)
 
-def combination(n,r):
+def combination(n:int,r:int):
     if n < r:
         return None
     return factorial(n) / (factorial(r) * factorial(n - r))
@@ -324,7 +314,7 @@ def absolute(number):
     return number
 
 def exp(number):
-    return EXP**number
+    return E**number
 
 def sqrt(number,tolerance = 1e-10,max_iterations = 1000):
     if number < 0:
@@ -451,7 +441,7 @@ def product(array):
     answer = 1
     for x in array:
         answer *= x
-    return x
+    return answer
 
 def is_nan(array):
     for x in array:

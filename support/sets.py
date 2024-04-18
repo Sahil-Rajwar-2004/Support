@@ -1,6 +1,6 @@
 import numpy as np
 
-version = "0.0.1"
+version = "0.0.2"
 
 def sets(array):
     if isinstance(array,Sets):
@@ -24,7 +24,7 @@ class Sets:
         self.__size += 1
 
     def remove(self,data):
-        if is_null:
+        if self.is_null():
             raise ValueError("null set")
         self.__set.remove(data)
         self.__size -= 1
@@ -34,8 +34,7 @@ class Sets:
         return self.__size
 
     def __repr__(self):
-        if isinstance(self,Sets):
-            return f"<Sets object at {hex(id(self))}, size = {self.__size}>"
+        return f"<Sets object at {hex(id(self))}, size = {self.__size}>"
 
     def numpy(self):
         return np.array(self.__set)
@@ -57,13 +56,13 @@ class Sets:
             if x in other.__set:
                 new_set.append(x)
         return Sets(new_set)
-    
+
     def is_null(self):
         return len(self.__set) == 0
-    
+
     def null(self):
         return Sets([])
-        
+
     def subset(self, other):
         if not isinstance(other, Sets):
             raise TypeError(f"{type(other).__name__} isn't compatible with 'Sets'")
@@ -80,7 +79,7 @@ class Sets:
             for y in other.__set:
                 new_set.append((x,y))
         return Sets(new_set)
-    
+
     def difference(self, other):
         if not isinstance(other, Sets):
             raise TypeError(f"{type(other).__name__} isn't compatible with 'Sets'")

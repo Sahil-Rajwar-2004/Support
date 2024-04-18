@@ -8,7 +8,7 @@ class SearchFile:
         self.directory = directory
 
     def search(self):
-        for root,dirs,files in os.walk(self.directory):
+        for root,_,files in os.walk(self.directory):
             if self.filename in files:
                 return os.path.join(root,self.filename)
         return f"file: '{self.filename}' not found at '{self.directory}'"
