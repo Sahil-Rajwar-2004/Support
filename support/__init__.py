@@ -1,5 +1,5 @@
 """
-support (v-0.2.0):
+support (v-0.2.1):
 =================
 
 this is the minimalist and genral purpose python library
@@ -7,6 +7,8 @@ that includes:
   +-------------------------------+
   | modules         |    versions |
   +-----------------|-------------+
+  | matrix          |   (v-0.0.4) |
+  | .matrix/ops     |   (v-0.0.1) |
   | algorithm       |   (v-0.0.1) |
   | array           |   (v-0.0.2) |
   | boolean_algebra |   (v-0.0.1) |
@@ -19,7 +21,6 @@ that includes:
   | ll              |   (v-0.0.1) |
   | mapping         |   (v-0.0.1) |
   | mathx(math)     |   (v-0.1.0) |
-  | matrix          |   (v-0.0.3) |
   | physics         |   (v-0.0.1) |
   | sets            |   (v-0.0.1) |
   | stack           |   (v-0.0.1) |
@@ -31,5 +32,5 @@ that includes:
 
 # Author: Sahil Rajwar
 
-version = "0.2.0"
+version = "0.2.1"
 

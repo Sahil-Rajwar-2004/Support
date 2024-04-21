@@ -18,3 +18,7 @@ support changelog
     after:
     144 elif isinstance(other,complex) or isinstance(other,Complex):
     145     raise TypeError(f"to find the complex raise to the power complex isn't available/supported for version-0.0.2 of or below in complex.py module, try to install newer version or wait for update!")
+
+4. version (0.2.1):
+    some changes were done in matrix and its ops
+

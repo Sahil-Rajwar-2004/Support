@@ -15,7 +15,7 @@ module-homepage: https://github.com/Sahil-Rajwar-2004/support/blob/master/suppor
 
 import numpy as np
 
-version = "0.0.3"
+version = "0.0.4"
 
 def matrix(array):
     if isinstance(array,Matrix):

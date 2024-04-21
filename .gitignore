@@ -2,3 +2,5 @@ __pycache__
 dist
 build
 support.egg-info
+test.py
+
